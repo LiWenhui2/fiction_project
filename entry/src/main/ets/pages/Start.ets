@@ -1,43 +1,72 @@
-import axios from '../utils/HttpRequest'
 import data from '../../../mock/userAgreementData.json'
+import { common } from '@kit.AbilityKit'
+
 @Entry
 @ComponentV2
 struct Start {
   @Local agreement: Record<string, string[]> = {
     'summary': []
   }
+  private context = this.getUIContext().getHostContext() as common.UIAbilityContext
   startDialog: CustomDialogController = new CustomDialogController({
     builder: this.startDialogBuilder,
-    width:300,
+    width: 300,
 
-    cornerRadius:8
+    cornerRadius: 8
   })
 
   @Builder
   startDialogBuilder() {
-    Column({space:20}) {
+    Column({ space: 20 }) {
       Text('欢迎使用番茄免费小说')
         .width('100%')
         .fontSize(18)
         .fontWeight(500)
         .textAlign(TextAlign.Center)
         .fontColor('#030303')
-      List({space:15}) {
-        ForEach(this.agreement['summary'], (text: string) => {
-          ListItem(){
-            Text(text)
+      List({ space: 15 }) {
+        ForEach(this.agreement['summary'], (text: string, index: number) => {
+          ListItem() {
+            if (index == 1) {
+              Text() {
+                Span('1.你可以查看完整版')
+                Span('《用户协议》')
+                  .decoration({
+                    type: TextDecorationType.Underline,
+                    color: '#030303'
+                  })
+                  .fontColor('#030303')
+                Span('和')
+                Span('《隐私政策》')
+                  .decoration({
+                    type: TextDecorationType.Underline,
+                    color: '#030303'
+                  })
+                  .fontColor('#030303')
+                Span('以便了解我们收集、使用、共享、存储信息的情况，以及对信息的保护措施。')
+              }
+              .lineHeight(22)
               .fontColor('#434343')
+            } else {
+              Text(text)
+                .lineHeight(22)
+                .fontColor('#434343')
+            }
           }
         })
       }
       .scrollBar(BarState.Off)
       .width('100%')
       .height(200)
-      Column({space:10}){
+
+      Column({ space: 10 }) {
         Text('不同意')
           .fontColor('#9a9a9a')
           .fontWeight(300)
           .fontSize(14)
+          .onClick(() => {
+            this.context.terminateSelf()
+          })
         Button('同意并继续')
           .width('100%')
           .backgroundColor('#f86724')
@@ -47,11 +76,16 @@ struct Start {
           .padding(5)
       }
     }
-    .padding({left:20,right:20,top:40,bottom:20})
+    .padding({
+      left: 20,
+      right: 20,
+      top: 40,
+      bottom: 20
+    })
   }
 
   aboutToAppear(): void {
-   this.agreement['summary']=data.agreementData.summary
+    this.agreement['summary'] = data.agreementData.summary
     setTimeout(() => {
       this.startDialog.open()
     }, 500)

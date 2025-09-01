@@ -5,6 +5,7 @@
             "name": "ohos.permission.INTERNET"
           }
         ],
+    "routerMap": "$profile:route_map",
     "name": "entry",
     "type": "entry",
     "description": "$string:module_desc",
@@ -20,9 +21,9 @@
         "name": "EntryAbility",
         "srcEntry": "./ets/entryability/EntryAbility.ets",
         "description": "$string:EntryAbility_desc",
-        "icon": "$media:layered_image",
+        "icon": "$media:appIcon",
         "label": "$string:EntryAbility_label",
-        "startWindowIcon": "$media:startIcon",
+        "startWindowIcon": "$media:appIcon",
         "startWindowBackground": "$color:start_window_background",
         "exported": true,
         "skills": [
