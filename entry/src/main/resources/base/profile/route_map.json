@@ -7,7 +7,7 @@
     },
     {
       "name": "Login",
-      "pageSourceFile": "src/main/ets/pages/Login.ets",
+      "pageSourceFile": "src/main/ets/pages/login/Login.ets",
       "buildFunction": "LoginBuilder"
     }
   ]
