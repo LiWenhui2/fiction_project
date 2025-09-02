@@ -56,7 +56,7 @@ class HttpRequest {
   request<T = string>(url: string, config: configType<T>): Promise<object> {
     return new Promise((success, fail) => {
       let urlStr = this.baseUrl + url
-      if(config?.param) {
+      if (config?.param) {
         let str = Object.keys(config.param).map(k => `${k}=${config.param![k]}`).join('&')
         urlStr += `?${str}`
       }
@@ -64,11 +64,15 @@ class HttpRequest {
         let obj = this.interceptor.request(config)
         config.header = assign(config?.header || {}, obj.header || {})
       }
-
+      let dataStr = ''
+      if (config.data) {
+        dataStr =
+          Object.keys(config.data).map(k => `${encodeURI(k)}=${encodeURI(((config.data!) as object)[k])}`).join('&')
+      }
       this.httpRequest.request(urlStr, {
         method: config?.method as http.RequestMethod || http.RequestMethod.GET,
-        header: assign({'content-type': 'application/json'}, config?.header || {}),
-        extraData: config?.data ? JSON.stringify(config.data) : undefined
+        header: assign({ 'content-type': 'application/x-www-form-urlencoded' }, config?.header || {}),
+        extraData: config?.data ? dataStr : undefined
       }).then(res => {
         if (typeof res.result == 'string') {
           res.result = JSON.parse(res.result)
@@ -82,22 +86,22 @@ class HttpRequest {
 
   // 封装 GET 请求
   async get(url: string, header?: Record<string, string>, param?: Record<string, string>): Promise<object> {
-    return this.request(url, {param, header})
+    return this.request(url, { param, header })
   }
 
   // 封装 POST 请求
-  async post<T>(url: string, data: T, header?: Record<string, string>, ): Promise<object> {
-    return this.request(url, {method: 'POST', data, header})
+  async post<T>(url: string, data: T, header?: Record<string, string>,): Promise<object> {
+    return this.request(url, { method: 'POST', data, header })
   }
 
   // 封装 PUT 请求
-  async put<T>(url: string, data: T, header?: Record<string, string>, ): Promise<object> {
-    return this.request(url, {method: 'PUT', data, header})
+  async put<T>(url: string, data: T, header?: Record<string, string>,): Promise<object> {
+    return this.request(url, { method: 'PUT', data, header })
   }
 
   // 封装 DELETE 请求
   async delete(url: string, header?: Record<string, string>, param?: Record<string, string>): Promise<object> {
-    return this.request(url, {method: 'DELETE', param, header})
+    return this.request(url, { method: 'DELETE', param, header })
   }
 }
 

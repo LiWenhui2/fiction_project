@@ -1,17 +1,23 @@
 import data from '../../../mock/userAgreementData.json'
 import { common } from '@kit.AbilityKit'
+import stack from '../utils/route'
 
-@Entry
+@Builder
+export function StartBuilder() {
+  Start()
+}
+
 @ComponentV2
 struct Start {
   @Local agreement: Record<string, string[]> = {
     'summary': []
   }
+  private pathStack: NavPathStack = new NavPathStack()
   private context = this.getUIContext().getHostContext() as common.UIAbilityContext
   startDialog: CustomDialogController = new CustomDialogController({
     builder: this.startDialogBuilder,
     width: 300,
-
+    autoCancel: false,
     cornerRadius: 8
   })
 
@@ -74,6 +80,10 @@ struct Start {
           .fontSize(18)
           .fontWeight(600)
           .padding(5)
+          .onClick(() => {
+            this.startDialog.close()
+            stack.replacePathByName('Login', null)
+          })
       }
     }
     .padding({
@@ -92,15 +102,15 @@ struct Start {
   }
 
   build() {
-    Column() {
-      Stack() {
+    NavDestination() {
+      Column() {
         Image($r('app.media.start'))
           .width('100%')
           .objectFit(ImageFit.Fill)
           .expandSafeArea([SafeAreaType.SYSTEM], [SafeAreaEdge.TOP, SafeAreaEdge.BOTTOM])
       }
+      .height('100%')
+      .width('100%')
     }
-    .height('100%')
-    .width('100%')
   }
 }
