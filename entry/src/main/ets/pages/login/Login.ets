@@ -1,4 +1,5 @@
 import { common } from '@kit.AbilityKit'
+import stack from '../../utils/route'
 
 @Extend(Row)
 function PhoneLoginRowStyle() {
@@ -238,6 +239,9 @@ struct Login {
                   .fontSize(13)
                   .fontColor('rgba(255,255,255,0.75)')
                   .margin({ top: 6, bottom: 6 })
+                  .onClick(() => {
+                    stack.pushPathByName('AccountLogin', null)
+                  })
                 Row() {
                   ForEach(this.loginTypeList, (item: ResourceStr) => {
                     Row() {

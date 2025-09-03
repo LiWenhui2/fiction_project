@@ -9,6 +9,16 @@
       "name": "Login",
       "pageSourceFile": "src/main/ets/pages/login/Login.ets",
       "buildFunction": "LoginBuilder"
+    },
+    {
+      "name": "AccountLogin",
+      "pageSourceFile": "src/main/ets/pages/login/AccountLogin.ets",
+      "buildFunction": "AccountLoginBuilder"
+    },
+    {
+      "name": "Register",
+      "pageSourceFile": "src/main/ets/pages/login/Register.ets",
+      "buildFunction": "RegisterBuilder"
     }
   ]
 }
