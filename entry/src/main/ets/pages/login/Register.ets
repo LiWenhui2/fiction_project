@@ -28,6 +28,9 @@ function PhoneLoginRowStyle() {
 
 @ComponentV2
 struct Register {
+  @Local phone: string = ''
+  @Local email: string = ''
+  @Local alertMessage: string = ''
   @Local phone: string = '15502796477'
   @Local email: string = 'vonphy217@gmail.com'
   @Local code: string = ''
