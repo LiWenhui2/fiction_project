@@ -6,6 +6,11 @@
       "buildFunction": "StartBuilder"
     },
     {
+      "name": "CountryList",
+      "pageSourceFile": "src/main/ets/pages/login/CountryList.ets",
+      "buildFunction": "CountryListBuilder"
+    },
+    {
       "name": "Login",
       "pageSourceFile": "src/main/ets/pages/login/Login.ets",
       "buildFunction": "LoginBuilder"

@@ -1,4 +1,5 @@
 import { common } from '@kit.AbilityKit'
+import stack from '../../utils/route'
 
 @Extend(Row)
 function PhoneLoginRowStyle() {
@@ -30,6 +31,7 @@ struct Login {
   //0 默认登录 1 手机号登录 2 账号密码登录 3 未同意协议手机号登录 4 未同意协议账号密码登录
   @Local loginType: number = 0
   @Local isAgree: boolean = true
+  @Local phoneCode: string = '86'
   @Local loginTypeList: ResourceStr[] = [
     $r('app.media.login_wechat'),
     $r('app.media.login_QQ'),
@@ -45,6 +47,14 @@ struct Login {
     autoCancel: false,
     backgroundColor: '#fff'
   })
+
+  onPageShow(): void {
+    console.log('111')
+    console.log(JSON.stringify(stack.getParamByName('CountryList')))
+    if (stack.getParamByName('Login')) {
+      // this.phoneCode=
+    }
+  }
 
   @Builder
   agreementDialogBuilder() {
@@ -188,17 +198,20 @@ struct Login {
                 Row({ space: 10 }) {
                   Image($r('app.media.login_phone'))
                     .width(24)
-                  Text('+86')
+                  Text(`+${this.phoneCode}`)
                     .fontColor('#1b1b1b')
                     .fontWeight(500)
                     .margin({ left: 5, right: 5 })
+                    .onClick(() => {
+                      stack.pushPathByName('CountryList', null)
+                    })
 
                   Image($r('app.media.login_phone_more'))
                     .width(12)
                   TextInput({ placeholder: '请输入手机号' })
                     .textInputStyle()
                     .onFocus(() => {
-                      this.offsetY = -270
+                      this.offsetY = -260
                     })
                     .onBlur(() => {
                       this.offsetY = 0
@@ -212,7 +225,7 @@ struct Login {
                   TextInput({ placeholder: '请输入短信验证码' })
                     .textInputStyle()
                     .onFocus(() => {
-                      this.offsetY = -270
+                      this.offsetY = -260
                     })
                     .onBlur(() => {
                       this.offsetY = 0

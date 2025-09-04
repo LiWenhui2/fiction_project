@@ -1,20 +1,5 @@
 {
   "app": {
-    "signingConfigs": [
-      {
-        "name": "default",
-        "type": "HarmonyOS",
-        "material": {
-          "certpath": "/Users/mino/.ohos/config/default_fiction_project_I61J23N4j_OaVmvSpfArp7LJQXgLTsJNYgtiW9aLyW0=.cer",
-          "keyAlias": "debugKey",
-          "keyPassword": "0000001B7DC8841880A2097F5EA972095073CFE58DF4E49B7BEA0179A7C6249FEEBA9B384077BD45BC7B2A",
-          "profile": "/Users/mino/.ohos/config/default_fiction_project_I61J23N4j_OaVmvSpfArp7LJQXgLTsJNYgtiW9aLyW0=.p7b",
-          "signAlg": "SHA256withECDSA",
-          "storeFile": "/Users/mino/.ohos/config/default_fiction_project_I61J23N4j_OaVmvSpfArp7LJQXgLTsJNYgtiW9aLyW0=.p12",
-          "storePassword": "0000001B1FD636DEFF49ED742C373FE8D41B6DC402608052221049B1532F1DEA52960B4566545B8CA58436"
-        }
-      }
-    ],
     "products": [
       {
         "name": "default",

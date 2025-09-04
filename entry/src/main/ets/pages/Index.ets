@@ -4,12 +4,12 @@ import stack from '../utils/route'
 @Component
 struct Index {
   aboutToAppear(): void {
-    stack.pushPathByName('Start',null)
+    stack.pushPathByName('Login', null)
+    // stack.pushPathByName('Start',null)
   }
 
   build() {
-    Navigation(stack){
-      Text('Index')
+    Navigation(stack) {
     }
     .hideNavBar(true)
     .height('100%')
