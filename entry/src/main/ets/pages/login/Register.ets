@@ -149,11 +149,15 @@ struct Register {
           Divider().strokeWidth(1).color('#cecece').height(25).vertical(true)
           Text(this.codeIsSend ? `已发送(${this.codeCount})` : '获取验证码')
             .fontColor(this.codeIsSend ? '#cecece' : '#921721')
-            .onClick(() => {
+            .onClick(async () => {
               if (!this.codeIsSend) {
-                this.codeIsSend = true
-                const res = axios.post<Record<string, string>>('/verify/registerSend12', { 'email': this.email })
+                const res = await axios.post<Record<string, string>>('/verify/registerSend', { "email": this.email })
+                if (res['status'] == 0) {
+                  this.alertMessage = '验证码已发送'
+                  this.dialogOpen()
+                }
                 console.log(JSON.stringify(res))
+                this.codeIsSend = true
                 const timeId = setInterval(() => {
                   if (this.codeCount <= 0) {
                     this.codeIsSend = false
