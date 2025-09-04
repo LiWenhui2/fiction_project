@@ -6,8 +6,10 @@
  *      + 请求拦截器是在请求之前对象每次请求进行处理  cookie  token
  *      + 响应拦截器是对响应回来的结果（数据）进行处理
  * */
-import { http } from '@kit.NetworkKit'
-import { BusinessError } from '@kit.BasicServicesKit'
+import { http } from '@kit.NetworkKit';
+import { BusinessError, request } from '@kit.BasicServicesKit';
+import fs from '@ohos.file.fs';
+
 
 interface configType<T> {
   method?: 'GET' | 'POST' | 'PUT' | 'DELETE',
@@ -64,11 +66,14 @@ class HttpRequest {
         let obj = this.interceptor.request(config)
         config.header = assign(config?.header || {}, obj.header || {})
       }
+
+      // 对 POST PUT 发送的数据进行处理
       let dataStr = ''
       if (config.data) {
         dataStr =
           Object.keys(config.data).map(k => `${encodeURI(k)}=${encodeURI(((config.data!) as object)[k])}`).join('&')
       }
+
       this.httpRequest.request(urlStr, {
         method: config?.method as http.RequestMethod || http.RequestMethod.GET,
         header: assign({ 'content-type': 'application/x-www-form-urlencoded' }, config?.header || {}),
@@ -103,17 +108,19 @@ class HttpRequest {
   async delete(url: string, header?: Record<string, string>, param?: Record<string, string>): Promise<object> {
     return this.request(url, { method: 'DELETE', param, header })
   }
+
 }
 
 enum baseurl {
   // 开发阶段的测试地址
-  DEVELOP = 'http://192.168.1.11:3000/',
+  DEVELOP = 'http://192.168.1.14:3001/',
   // 上线阶段的实际地址
-  PRODUCT = 'http://43.159.41.42:3333/api/'
+  PRODUCT = 'http://43.159.41.42:3333/api'
 }
 
 let axios = new HttpRequest()
 
+axios.baseUrl = baseurl.DEVELOP
 axios.baseUrl = baseurl.PRODUCT
 
 export default axios
