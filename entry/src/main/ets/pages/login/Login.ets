@@ -28,9 +28,10 @@ export function LoginBuilder() {
 
 @ComponentV2
 struct Login {
-  //0 默认登录 1 手机号登录 2 账号密码登录 3 未同意协议手机号登录 4 未同意协议账号密码登录
+  //0 默认登录 1 手机号登录 2 账号密码登录 3 未同意协议手机号登录 4 未同意协议账号密码登录 5 手机登录页面未同意协议
   @Local loginType: number = 0
   @Local isAgree: boolean = true
+  @Local phoneCode: string = '86'
   @Local loginTypeList: ResourceStr[] = [
     $r('app.media.login_wechat'),
     $r('app.media.login_QQ'),
@@ -91,8 +92,9 @@ struct Login {
             this.agreementDialogController.close()
             if (this.loginType == 3) {
               this.loginType = 1
-            } else if (this.loginType == 4) {
-              this.loginType = 2
+            } else if ([4, 5].includes(this.loginType)) {
+              this.loginType = 0
+              stack.pushPathByName('AccountLogin', null)
             }
           })
       }
@@ -142,7 +144,7 @@ struct Login {
           .width('100%')
 
           Column({ space: 30 }) {
-            if (this.loginType == 0) {
+            if ([0, 3, 4].includes(this.loginType)) {
               Column({ space: 20 }) {
                 this.loginOption('微信登录', $r('app.media.wechat'))
                 this.loginOption('QQ登录', $r('app.media.QQ'))
@@ -177,6 +179,8 @@ struct Login {
                     if (!this.isAgree) {
                       this.loginType = 4
                       this.agreementDialogController.open()
+                    } else {
+                      stack.pushPathByName('AccountLogin', null)
                     }
                   })
                 }
@@ -184,22 +188,27 @@ struct Login {
                 .width('100%')
                 .justifyContent(FlexAlign.SpaceAround)
               }
-            } else if (this.loginType == 1) {
+            } else {
               Column({ space: 12 }) {
                 Row({ space: 10 }) {
                   Image($r('app.media.login_phone'))
                     .width(24)
-                  Text('+86')
+                  Text(`+${this.phoneCode}`)
                     .fontColor('#1b1b1b')
                     .fontWeight(500)
                     .margin({ left: 5, right: 5 })
+                    .onClick(() => {
+                      stack.pushPathByName('CountryList', '', (data) => {
+                        this.phoneCode = data.result['code']
+                      })
+                    })
 
                   Image($r('app.media.login_phone_more'))
                     .width(12)
                   TextInput({ placeholder: '请输入手机号' })
                     .textInputStyle()
                     .onFocus(() => {
-                      this.offsetY = -270
+                      this.offsetY = -260
                     })
                     .onBlur(() => {
                       this.offsetY = 0
@@ -213,7 +222,7 @@ struct Login {
                   TextInput({ placeholder: '请输入短信验证码' })
                     .textInputStyle()
                     .onFocus(() => {
-                      this.offsetY = -270
+                      this.offsetY = -260
                     })
                     .onBlur(() => {
                       this.offsetY = 0
@@ -243,7 +252,7 @@ struct Login {
                     stack.pushPathByName('AccountLogin', null)
                   })
                 Row() {
-                  ForEach(this.loginTypeList, (item: ResourceStr) => {
+                  ForEach(this.loginTypeList, (item: ResourceStr, index: number) => {
                     Row() {
                       Image(item)
                         .width(30)
@@ -252,6 +261,16 @@ struct Login {
                     .border({ radius: '50%', width: 1, color: '#fff' })
                     .width(50)
                     .height(50)
+                    .onClick(() => {
+                      if (index == 3) {
+                        if (!this.isAgree) {
+                          this.loginType = 5
+                          this.agreementDialogController.open()
+                        } else {
+                          stack.pushPathByName('AccountLogin', null)
+                        }
+                      }
+                    })
                   })
                 }
                 .width('100%')
