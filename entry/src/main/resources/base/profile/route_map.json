@@ -24,6 +24,11 @@
       "name": "Register",
       "pageSourceFile": "src/main/ets/pages/login/Register.ets",
       "buildFunction": "RegisterBuilder"
+    },
+    {
+      "name": "ResetPwd",
+      "pageSourceFile": "src/main/ets/pages/login/ResetPwd.ets",
+      "buildFunction": "ResetPwdBuilder"
     }
   ]
 }

@@ -26,19 +26,19 @@ export function LoginBuilder() {
   Login()
 }
 
-@ComponentV2
+@Component
 struct Login {
   //0 默认登录 1 手机号登录 2 账号密码登录 3 未同意协议手机号登录 4 未同意协议账号密码登录 5 手机登录页面未同意协议
-  @Local loginType: number = 0
-  @Local isAgree: boolean = true
-  @Local phoneCode: string = '86'
-  @Local loginTypeList: ResourceStr[] = [
+  @State loginType: number = 0
+  @State isAgree: boolean = true
+  @State phoneCode: string = '86'
+  @State loginTypeList: ResourceStr[] = [
     $r('app.media.login_wechat'),
     $r('app.media.login_QQ'),
     $r('app.media.login_douyin'),
     $r('app.media.more')
   ]
-  @Local offsetY: number = 0
+  @State offsetY: number = 0
   private context = this.getUIContext().getHostContext() as common.UIAbilityContext
   agreementDialogController: CustomDialogController = new CustomDialogController({
     builder: this.agreementDialogBuilder,

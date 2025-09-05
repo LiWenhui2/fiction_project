@@ -24,6 +24,8 @@ function PhoneLoginRowStyle() {
   .width('100%')
   .backgroundColor('#fff')
   .borderRadius(25)
+  .borderWidth(1)
+  .borderColor('#999')
 }
 
 @ComponentV2
@@ -49,7 +51,7 @@ struct Register {
     builder: this.alertDialog,
     backgroundColor: '#0f0e13',
     width: 200,
-    height: 50,
+    height: 70,
     cornerRadius: 15,
     isModal: false
   })
@@ -61,7 +63,7 @@ struct Register {
       .padding(15)
       .backgroundColor('#0f0e13')
       .width(200)
-      .height(50)
+      .height(70)
       .fontWeight(500)
       .textAlign(TextAlign.Center)
   }
@@ -179,7 +181,7 @@ struct Register {
                     this.codeCount--
                   }, 1000)
                 } else {
-                  this.alertMessage = '验证码发送失败，请稍后重试'
+                  this.alertMessage = res['message'] || '验证码发送失败，请稍后重试'
                   this.dialogOpen()
                 }
               }
@@ -220,6 +222,7 @@ struct Register {
             .textAlign(TextAlign.Center)
         }
         .PhoneLoginRowStyle()
+        .borderColor(Color.Transparent)
         .backgroundColor(this.isPhoneLegal && this.isEmailLegal && this.isCodeLegal && this.isPwdLegal ? '#e4363f' :
           '#e0e0e0')
         .onClick(async () => {
