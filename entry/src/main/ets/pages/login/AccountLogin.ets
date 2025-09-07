@@ -13,8 +13,8 @@ function PhoneLoginRowStyle() {
   .width('100%')
   .backgroundColor('#fff')
   .borderRadius(25)
-  .borderWidth(1)
-  .borderColor('#999')
+  // .borderWidth(1)
+  // .borderColor('#999')
 }
 
 @Extend(TextInput)
@@ -134,11 +134,18 @@ struct AccountLogin {
               return
             }
             this.token = res['token']
-            console.log('login success')
+            axios.setRequestInterceptor((config) => {
+              config.header = {
+                "authorization": AppStorage.get('token') || ''
+              }
+              return config
+            })
+            stack.clear()
+            stack.pushPathByName('Home', '')
+
           } catch (e) {
             console.log(e)
           }
-
         })
 
         Row() {

@@ -29,6 +29,21 @@
       "name": "ResetPwd",
       "pageSourceFile": "src/main/ets/pages/login/ResetPwd.ets",
       "buildFunction": "ResetPwdBuilder"
+    },
+    {
+      "name": "Verification",
+      "pageSourceFile": "src/main/ets/pages/login/Verification.ets",
+      "buildFunction": "VerificationBuilder"
+    },
+    {
+      "name": "NewPwd",
+      "pageSourceFile": "src/main/ets/pages/login/NewPwd.ets",
+      "buildFunction": "NewPwdBuilder"
+    },
+    {
+      "name": "Home",
+      "pageSourceFile": "src/main/ets/pages/Home.ets",
+      "buildFunction": "HomeBuilder"
     }
   ]
 }

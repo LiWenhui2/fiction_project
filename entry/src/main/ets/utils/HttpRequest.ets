@@ -95,7 +95,7 @@ class HttpRequest {
   }
 
   // 封装 POST 请求
-  async post<T>(url: string, data: T, header?: Record<string, string>,): Promise<object> {
+  async post<T=Record<string,string>>(url: string, data: T, header?: Record<string, string>,): Promise<object> {
     return this.request(url, { method: 'POST', data, header })
   }
 

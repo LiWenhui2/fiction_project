@@ -24,8 +24,8 @@ function PhoneLoginRowStyle() {
   .width('100%')
   .backgroundColor('#fff')
   .borderRadius(25)
-  .borderWidth(1)
-  .borderColor('#999')
+  // .borderWidth(1)
+  // .borderColor('#999')
 }
 
 @ComponentV2
@@ -167,9 +167,25 @@ struct Register {
             .fontColor(this.codeIsSend ? '#cecece' : '#921721')
             .onClick(async () => {
               if (!this.codeIsSend) {
-                const res = await axios.post<Record<string, string>>('/verify/registerSend', { 'email': this.email })
+                const isPhoneExistRes = await axios.post<Record<string, string>>('/user/isExist', {
+                  'account': this.phone
+                })
+                if (isPhoneExistRes['status'] == 0) {
+                  this.alertMessage = '手机号已被注册'
+                  this.dialogOpen()
+                  return
+                }
+                const isEmailExistRes = await axios.post<Record<string, string>>('/user/isExist', {
+                  'account': this.email
+                })
+                if (isEmailExistRes['status'] == 0) {
+                  this.alertMessage = '邮箱已被注册'
+                  this.dialogOpen()
+                  return
+                }
+                this.codeIsSend = true
+                const res = await axios.post<Record<string, string>>('/verify/sendCode', { 'email': this.email })
                 if (res['status'] == 0) {
-                  this.codeIsSend = true
                   this.alertMessage = '验证码已发送'
                   this.dialogOpen()
                   const timeId = setInterval(() => {

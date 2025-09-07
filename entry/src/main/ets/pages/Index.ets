@@ -3,9 +3,14 @@ import stack from '../utils/route'
 @Entry
 @Component
 struct Index {
+  @StorageProp('token') token: string = ''
+
   aboutToAppear(): void {
-    stack.pushPathByName('Login', null)
-    // stack.pushPathByName('Start',null)
+    if (this.token) {
+      stack.pushPathByName('Home', '')
+      return
+    }
+    stack.pushPathByName('Start', null)
   }
 
   build() {

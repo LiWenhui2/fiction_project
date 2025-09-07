@@ -17,8 +17,9 @@ export default class EntryAbility extends UIAbility {
   onWindowStageCreate(windowStage: window.WindowStage): void {
     // Main window is created, set main page for this ability
     hilog.info(DOMAIN, 'testTag', '%{public}s', 'Ability onWindowStageCreate');
-    AppStorage.setOrCreate('token', '')
+    // AppStorage.setOrCreate('token', '')
     windowStage.loadContent('pages/Index', (err) => {
+      PersistentStorage.persistProp('token','')
       if (err.code) {
         hilog.error(DOMAIN, 'testTag', 'Failed to load the content. Cause: %{public}s', JSON.stringify(err));
         return;
